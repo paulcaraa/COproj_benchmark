@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">COBenchmarkApp</string>
+    <color name="myBackground">#200122</color>
+    <color name="BackButtonColor">#6f0000</color>
+</resources>
