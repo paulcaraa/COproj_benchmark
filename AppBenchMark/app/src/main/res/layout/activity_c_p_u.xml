@@ -69,7 +69,6 @@
         android:background="#FFFFFF"
         app:cardCornerRadius="24dp"
         app:cardElevation="12dp">
-
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
