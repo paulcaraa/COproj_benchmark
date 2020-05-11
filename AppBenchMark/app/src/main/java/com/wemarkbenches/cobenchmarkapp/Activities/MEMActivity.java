@@ -14,11 +14,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.wemarkbenches.cobenchmarkapp.R;
+import com.wemarkbenches.cobenchmarkapp.benchmark.SSDbenchmark.Benchmark;
 import com.wemarkbenches.cobenchmarkapp.main.MainActivity;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
-public class SSDActivity extends AppCompatActivity {
+public class MEMActivity extends AppCompatActivity {
 
     CircularProgressButton circularProgressButton;
     private Button button;
@@ -42,7 +43,7 @@ public class SSDActivity extends AppCompatActivity {
 
 
                 if(v.getId() == R.id.btnback) {
-                    Intent intent = new Intent(SSDActivity.this, MainActivity.class);
+                    Intent intent = new Intent(MEMActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
             }
@@ -75,7 +76,7 @@ public class SSDActivity extends AppCompatActivity {
                     @Override
                     protected String doInBackground(String... params) {
                         try {
-                            /* Aici bagi benchmarkul!! */
+                            Benchmark.run();
                             Thread.sleep(3000);
                         }
                         catch(InterruptedException e) {
@@ -88,7 +89,7 @@ public class SSDActivity extends AppCompatActivity {
                     protected void onPostExecute(String s) {
                         if(s.equals("Done!")) {
                             result.setVisibility(View.VISIBLE);
-                            Toast.makeText(SSDActivity.this, "Benchmark done", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MEMActivity.this, "Benchmark done", Toast.LENGTH_SHORT).show();
                             circularProgressButton.doneLoadingAnimation(Color.parseColor("#B82E1F"), BitmapFactory.decodeResource(getResources(),R.drawable.ic_done_white_48dp));
                         }
                     }
