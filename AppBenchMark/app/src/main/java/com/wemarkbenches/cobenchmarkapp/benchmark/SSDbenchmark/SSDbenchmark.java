@@ -1,8 +1,8 @@
-package com.wemarkbenches.cobenchmarkapp.benchmark.MEMbenchmark;
+package com.wemarkbenches.cobenchmarkapp.benchmark.SSDbenchmark;
 
 import com.wemarkbenches.cobenchmarkapp.benchmark.IBenchmark;
 
-public class MEMbenchmark implements IBenchmark {
+public class SSDbenchmark implements IBenchmark {
     @Override
     public void initialize(Object... param) {
 

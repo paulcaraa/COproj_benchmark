@@ -18,7 +18,7 @@ import com.wemarkbenches.cobenchmarkapp.main.MainActivity;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
-public class MEMActivity extends AppCompatActivity {
+public class SSDActivity extends AppCompatActivity {
 
     CircularProgressButton circularProgressButton;
     private Button button;
@@ -42,7 +42,7 @@ public class MEMActivity extends AppCompatActivity {
 
 
                 if(v.getId() == R.id.btnback) {
-                    Intent intent = new Intent(MEMActivity.this, MainActivity.class);
+                    Intent intent = new Intent(SSDActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
             }
@@ -88,7 +88,7 @@ public class MEMActivity extends AppCompatActivity {
                     protected void onPostExecute(String s) {
                         if(s.equals("Done!")) {
                             result.setVisibility(View.VISIBLE);
-                            Toast.makeText(MEMActivity.this, "Benchmark done", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SSDActivity.this, "Benchmark done", Toast.LENGTH_SHORT).show();
                             circularProgressButton.doneLoadingAnimation(Color.parseColor("#B82E1F"), BitmapFactory.decodeResource(getResources(),R.drawable.ic_done_white_48dp));
                         }
                     }
