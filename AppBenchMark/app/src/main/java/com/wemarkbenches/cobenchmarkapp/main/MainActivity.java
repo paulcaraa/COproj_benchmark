@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View arg0) {
+
         if(arg0.getId() == R.id.button1) {
             Intent intent = new Intent(this, CPUActivity.class);
             this.startActivity(intent);

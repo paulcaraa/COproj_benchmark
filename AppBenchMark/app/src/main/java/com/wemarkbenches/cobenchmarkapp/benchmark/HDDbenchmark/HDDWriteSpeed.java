@@ -1,6 +1,5 @@
-package com.wemarkbenches.cobenchmarkapp.benchmark.SSDbenchmark;
+package com.wemarkbenches.cobenchmarkapp.benchmark.HDDbenchmark;
 
-import android.content.Context;
 import android.os.Environment;
 
 import com.wemarkbenches.cobenchmarkapp.benchmark.IBenchmark;
@@ -8,6 +7,9 @@ import com.wemarkbenches.cobenchmarkapp.benchmark.IBenchmark;
 import java.io.IOException;
 
 public class HDDWriteSpeed implements IBenchmark {
+    double resultScore;
+    FileWriter writer = new FileWriter();
+
     @Override
     public void initialize(Object... params) {
     }
@@ -24,7 +26,7 @@ public class HDDWriteSpeed implements IBenchmark {
 
     @Override
     public void run(Object... options) {
-        FileWriter writer = new FileWriter();
+
         // either "fs" - fixed size, or "fb" - fixed buffer
         String option = (String) options[0];
         // true/false whether the written files should be deleted at the end
@@ -65,7 +67,7 @@ public class HDDWriteSpeed implements IBenchmark {
 
     @Override
     public String getResult() {
-        return null;
+        return writer.getStats();
     }
 
 }

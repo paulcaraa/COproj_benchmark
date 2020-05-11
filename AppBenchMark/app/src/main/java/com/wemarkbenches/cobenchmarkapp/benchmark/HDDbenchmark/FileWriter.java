@@ -1,4 +1,4 @@
-package com.wemarkbenches.cobenchmarkapp.benchmark.SSDbenchmark;
+package com.wemarkbenches.cobenchmarkapp.benchmark.HDDbenchmark;
 
 import com.wemarkbenches.cobenchmarkapp.timing.Timer;
 
@@ -6,8 +6,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
@@ -20,6 +18,9 @@ public class FileWriter {
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 512; // MB
     private Timer timer = new Timer();
     private double benchScore;
+    String fileName;
+    long fileSize;
+    int myBufferSize;
 
     /**
      * Writes files on disk using a variable write buffer and fixed file size.
@@ -40,13 +41,13 @@ public class FileWriter {
                                      int minIndex, int maxIndex, long fileSize, boolean clean)
             throws IOException {
 
-        System.out.println("Stream write benchmark with fixed file size");
+        //System.out.println("Stream write benchmark with fixed file size");
         int currentBufferSize = MIN_BUFFER_SIZE;
-        String fileName;
         int counter = minIndex;
         int currentWrittenSize = 0;
         benchScore = 0;
 
+        timer.start();
         while (currentBufferSize <= MAX_BUFFER_SIZE
                 && counter <= maxIndex) {
             fileName = new String(filePrefix + counter + fileSuffix);
@@ -55,15 +56,15 @@ public class FileWriter {
                 writeWithBufferSize(fileName, currentBufferSize, fileSize, clean);
                 currentWrittenSize += currentBufferSize;
             }
-            currentBufferSize += currentBufferSize;
+            currentBufferSize = 4 * currentBufferSize;
 
             counter++;
         }
 
         benchScore /= (maxIndex - minIndex + 1);
-        String partition = filePrefix.substring(0, filePrefix.indexOf(":\\"));
-        System.out.println("File write score on partition " + partition + ": "
-                + String.format("%.2f", benchScore) + " MB/sec");
+//        String partition = filePrefix.substring(0, filePrefix.indexOf(":\\"));
+//        System.out.println("File write score on partition " + partition + ": "
+//                + String.format("%.2f", benchScore) + " MB/sec");
     }
 
     /**
@@ -90,6 +91,7 @@ public class FileWriter {
         System.out.println("Stream write benchmark with fixed buffer size");
         int currentFileSize = MIN_FILE_SIZE;
 
+        timer.start();
         while (currentFileSize <= MAX_FILE_SIZE && counter <= maxIndex) {
             fileName = new String(filePrefix + counter + fileSuffix);
 
@@ -98,14 +100,14 @@ public class FileWriter {
                 writeWithBufferSize(fileName, bufferSize, currentFileSize, clean);
                 currentWrittenSize += bufferSize;
             }
-            currentFileSize += currentFileSize;
+            currentFileSize = 10 * currentFileSize;
             counter++;
         }
 
         benchScore /= (maxIndex - minIndex + 1);
-        String partition = filePrefix.substring(0, filePrefix.indexOf(":\\"));
-        System.out.println("File write score on partition " + partition + ": "
-                + String.format("%.2f", benchScore) + " MB/sec");
+//        String partition = filePrefix.substring(0, filePrefix.indexOf(":\\"));
+//        System.out.println("File write score on partition " + partition + ": "
+//                + String.format("%.2f", benchScore) + " MB/sec");
     }
 
     /**
@@ -139,7 +141,7 @@ public class FileWriter {
             outputStream.write(buffer);
             i++;
         }
-        printStats(fileName, fileSize, myBufferSize);
+        //printStats(fileName, fileSize, myBufferSize);
 
         outputStream.close();
         file_stream.close();
@@ -149,18 +151,16 @@ public class FileWriter {
         }
     }
 
-    private void printStats(String fileName, long totalBytes, int myBufferSize) {
-//        NumberFormat nf = new DecimalFormat("#.00");
-//        final long time = timer.stop();
-//        double seconds = ...; // calculated from timer's 'time'
-//        double megabytes = totalBytes / ...; //
-//        double rate = ... MB/s; // calculated from the previous two variables
-//        System.out.println("Done writing " + totalBytes + " bytes to file: "
-//                + fileName + " in " + nf.format(seconds) + " ms ("
-//                + nf.format(rate) + "MB/sec)" + " with a buffer size of "
-//                + myBufferSize / 1024 + " kB");
-//
-//        // actual score is write speed (MB/s)
-//        benchScore += rate;
+    public String getStats() {
+        NumberFormat nf = new DecimalFormat("#.00");
+        final long time = timer.stop();
+        double seconds = time * 1000; // calculated from timer's 'time'
+        double megabytes = fileSize / 1000000;
+        double rate = megabytes /seconds; // calculated from the previous two variables
+        return "The score for writing " + fileSize + " bytes to file: "+ fileName + " in " + nf.format(seconds) + " ms (" + nf.format(rate) + "MB/sec)" + " with a buffer size of " + myBufferSize / 1024 + " kB";
+
+
+        // actual score is write speed (MB/s)
+        //benchScore += rate;
     }
 }

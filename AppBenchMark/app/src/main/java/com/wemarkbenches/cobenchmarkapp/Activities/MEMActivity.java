@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.wemarkbenches.cobenchmarkapp.R;
-import com.wemarkbenches.cobenchmarkapp.benchmark.SSDbenchmark.Benchmark;
+import com.wemarkbenches.cobenchmarkapp.benchmark.HDDbenchmark.Benchmark;
 import com.wemarkbenches.cobenchmarkapp.main.MainActivity;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
