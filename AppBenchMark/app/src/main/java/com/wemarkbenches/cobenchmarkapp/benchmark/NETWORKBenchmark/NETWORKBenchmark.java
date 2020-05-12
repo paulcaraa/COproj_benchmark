@@ -31,7 +31,7 @@ public class NETWORKBenchmark implements  IBenchmark{
     public void initialize(Object ...size) {
 
         for (Object o: size)
-        this.result+=(Long)o;
+            this.result+=(Long)o;
     }
 
     public void warmUp() {
