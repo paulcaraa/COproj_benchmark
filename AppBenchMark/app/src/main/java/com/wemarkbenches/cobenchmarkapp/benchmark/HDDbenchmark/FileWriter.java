@@ -174,8 +174,8 @@ public class FileWriter {
         // actual score is write speed (MB/s)
         benchScore += rate;
 
-        Log.i("random", "megabytes/milliseconds " + megabytes + "/" + milliseconds);
-        Log.i("result", "The score for writing " + fileSize + " bytes to file: "+ fileName + " in " + nf.format(milliseconds) + " ms (" + nf.format(rate) + "MB/sec)" + " with a buffer size of " + myBufferSize / 1024 + " kB");
+        //Log.i("random", "megabytes/milliseconds " + megabytes + "/" + milliseconds);
+        //Log.i("result", "The score for writing " + fileSize + " bytes to file: "+ fileName + " in " + nf.format(milliseconds) + " ms (" + nf.format(rate) + "MB/sec)" + " with a buffer size of " + myBufferSize / 1024 + " kB");
         return rate;
     }
 }

@@ -7,7 +7,6 @@ import com.wemarkbenches.cobenchmarkapp.benchmark.IBenchmark;
 import java.io.IOException;
 
 public class HDDWriteSpeed implements IBenchmark {
-    double resultScore;
     FileWriter writer = new FileWriter();
     Context appContext;
 

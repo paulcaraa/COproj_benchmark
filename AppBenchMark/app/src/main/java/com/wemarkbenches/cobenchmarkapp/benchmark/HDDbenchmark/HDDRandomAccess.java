@@ -1,6 +1,7 @@
 package com.wemarkbenches.cobenchmarkapp.benchmark.HDDbenchmark;
 
-import android.os.Environment;
+import android.content.Context;
+import android.util.Log;
 
 import com.wemarkbenches.cobenchmarkapp.benchmark.IBenchmark;
 import com.wemarkbenches.cobenchmarkapp.timing.Timer;
@@ -12,14 +13,23 @@ import java.util.Random;
 
 public class HDDRandomAccess implements IBenchmark {
 
-	private final static String PATH = Environment.getDataDirectory().toString() + "/testraf.dat";
-	private String result;
+	private static String PATH;
+	private double result;
+	Context myContext;
+	int fileSize;
+
+	public HDDRandomAccess(Context context){
+		myContext = context;
+		PATH = myContext.getFilesDir() + "/testraf.dat";
+	}
+
 
 	@Override
 	public void initialize(Object... params) {
 		File tempFile = new File(PATH);
 		RandomAccessFile rafFile;
-		long fileSizeInBytes = (Long) params[0];
+		long fileSizeInBytes = Long.valueOf( String.valueOf(params[0]));
+		fileSize = Integer.parseInt(String.valueOf(fileSizeInBytes));
 
 		// Create a temporary file with random content to be used for
 		// reading and writing
@@ -62,6 +72,7 @@ public class HDDRandomAccess implements IBenchmark {
 		final int steps = 10000;
 		// used by the fixed time option
 		final int runtime = 5000; // ms
+		result = 0;
 
 		try {
 			// read benchmark
@@ -74,18 +85,22 @@ public class HDDRandomAccess implements IBenchmark {
 
 					long timeMs = new RandomAccess().randomReadFixedSize(PATH,
 							bufferSize, steps);
-					result = steps + " random reads in " + timeMs + " ms ["
-							+ (steps * bufferSize / 1024 / 1024) + " MB, "
-							+ 1.0 * (steps * bufferSize / 1024 / 1024) / timeMs * 1000 + "MB/s]";
+					double d = 1.0 * (steps * bufferSize / 1024 / 1024) / timeMs * 1000;
+//					Log.i("ranReadfs", steps + " random reads in " + timeMs + " ms ["
+//							+ (steps * bufferSize / 1024 / 1024) + " MB, "
+//							+ d + "MB/s] with fileSize " + fileSize);
+					result = d;
 				}
 				// read for a fixed time amount and measure time
 				else if (String.valueOf(param[1]).toLowerCase().equals("ft")) {
 
 					int ios = new RandomAccess().randomReadFixedTime(PATH,
 							bufferSize, runtime);
-					result = ios + " I/Os per second ["
-							+ (ios * bufferSize / 1024 / 1024) + " MB, "
-							+ 1.0 * (ios * bufferSize / 1024 / 1024) / runtime * 1000 + "MB/s]";
+					double d = 1.0 * (ios * bufferSize / 1024 / 1024) / runtime * 1000;
+//					Log.i("ranReadft", ios + " I/Os per second ["
+//							+ (ios * bufferSize / 1024 / 1024) + " MB, "
+//							+ d + "MB/s] with fileSize " + fileSize);
+					result = d;
 				} else
 					throw new UnsupportedOperationException("Read option \""
 							+ String.valueOf(param[1])
@@ -101,17 +116,21 @@ public class HDDRandomAccess implements IBenchmark {
                 if (String.valueOf(param[1]).toLowerCase().equals("fs")) {
                     long timeMs = new RandomAccess().randomWriteFixedSize(PATH,
                             bufferSize, steps);
-                    result = steps + " random writes in " + timeMs + " ms ["
-                            + (steps * bufferSize / 1024 / 1024) + " MB, "
-                            + 1.0 * (steps * bufferSize / 1024 / 1024) / timeMs * 1000 + "MB/s]";
+					double d = 1.0 * (steps * bufferSize / 1024 / 1024) / timeMs * 1000;
+//					Log.i("ranWritefs",steps + " random writes in " + timeMs + " ms ["
+//                            + (steps * bufferSize / 1024 / 1024) + " MB, "
+//                            + d + "MB/s] with fileSize " + fileSize);
+                    result = d;
                 }
                 // write for a fixed time amount and measure time
                 else if (String.valueOf(param[1]).toLowerCase().equals("ft")) {
                     int ios = new RandomAccess().randomWriteFixedTime(PATH,
                             bufferSize, runtime);
-                    result = ios + " I/Os per second ["
-                            + (ios * bufferSize / 1024 / 1024) + " MB, "
-                            + 1.0 * (ios * bufferSize / 1024 / 1024) / runtime * 1000 + "MB/s]";
+					double d = 1.0 * (ios * bufferSize / 1024 / 1024) / runtime * 1000;
+//					Log.i("ranWriteft",ios + " I/Os per second ["
+//                            + (ios * bufferSize / 1024 / 1024) + " MB, "
+//                            + d + "MB/s] with fileSize " + fileSize);
+                    result = 1.0 * (ios * bufferSize / 1024 / 1024) / runtime * 1000;
                 } else
                     throw new UnsupportedOperationException("Write option \""
                             + String.valueOf(param[1])
@@ -129,8 +148,10 @@ public class HDDRandomAccess implements IBenchmark {
 
 	@Override
 	public void clean() {
-		File fileToClear = new File(PATH);
-		fileToClear.delete();
+		File file = new File(PATH);
+		//Log.i("DeletingFile",fileName);
+		if(!file.delete())
+			Log.e("IOError","Failed to delete " + PATH);
 	}
 
 	@Override
@@ -167,8 +188,9 @@ public class HDDRandomAccess implements IBenchmark {
 				int toRead) throws IOException {
 			// file to read from
 			RandomAccessFile file = new RandomAccessFile(filePath, "rw");
+			//Log.i("file", "filePath " + filePath + " file.getChannel " + file.getChannel() + " Channel.size " + file.getChannel().size() + " file.size " + file.length());
 			// size of file
-			int fileSize = (int) (file.getChannel().size() % Integer.MAX_VALUE);
+			//int fileSize = (int) (file.getChannel().size() % Integer.MAX_VALUE);
 			// counter for number of reads
 			int counter = 0;
 			// timer
@@ -176,10 +198,15 @@ public class HDDRandomAccess implements IBenchmark {
 			//where to read from in the file
             int position;
 
+            if(fileSize <= bufferSize){
+            	bufferSize = fileSize/4;
+			}
 			timer.start();
-			while (counter++ < toRead) {
 
+			while (counter++ < toRead) {
+				//Log.i("random", "fileSize " + fileSize + " bufferSize " + bufferSize);
 			    position = random.nextInt(fileSize - bufferSize);
+			    //Log.i("position", "position " + position + " counter " + counter);
 				readFromFile(filePath, position, bufferSize);
 			}
 
@@ -190,7 +217,7 @@ public class HDDRandomAccess implements IBenchmark {
         public long randomWriteFixedSize(String filePath, int bufferSize, int toWrite) throws IOException {
 		    RandomAccessFile file = new RandomAccessFile(filePath, "rw");
 
-		    int fileSize = (int) (file.getChannel().size() % Integer.MAX_VALUE);
+		    //int fileSize = (int) (file.getChannel().size() % Integer.MAX_VALUE);
 		    int counter = 0;
 		    Timer timer = new Timer();
 
@@ -199,6 +226,10 @@ public class HDDRandomAccess implements IBenchmark {
 
 		    int position;
             Random rand = new Random();
+
+			if(fileSize <= bufferSize){
+				bufferSize = fileSize/4;
+			}
 
 		    timer.start();
 		    while(counter++ < toWrite){
@@ -232,7 +263,7 @@ public class HDDRandomAccess implements IBenchmark {
 			// file to read from
 			RandomAccessFile file = new RandomAccessFile(filePath, "rw");
 			// size of file
-			int fileSize = (int) (file.getChannel().size() % Integer.MAX_VALUE);
+			//int fileSize = (int) (file.getChannel().size() % Integer.MAX_VALUE);
 			// counter for number of reads
 			int counter = 0;
 			//where to read from in file
@@ -240,10 +271,16 @@ public class HDDRandomAccess implements IBenchmark {
 
 			long start = System.nanoTime();
 
-			// read for a fixed amount of time
-			while (System.nanoTime() - start  < millis/1000000) {
-				position = random.nextInt(fileSize - bufferSize);
+			if(fileSize <= bufferSize){
+				bufferSize = fileSize/4;
+			}
 
+			// read for a fixed amount of time
+			//Log.i("nanoTime", "start " + start + " max " + millis * 1000000000);
+			while ((System.nanoTime() - start)  < millis * 1000000000) {
+
+				position = random.nextInt(fileSize - bufferSize);
+				//Log.i("position", position + "");
                 readFromFile(filePath, position, bufferSize);
 
 				counter++;
@@ -255,7 +292,7 @@ public class HDDRandomAccess implements IBenchmark {
 
         public int randomWriteFixedTime(String filePath, int bufferSize, int millis) throws IOException {
             RandomAccessFile file = new RandomAccessFile(filePath, "rw");
-            int fileSize = (int) (file.getChannel().size() % Integer.MAX_VALUE);
+            //int fileSize = (int) (file.getChannel().size() % Integer.MAX_VALUE);
             int counter = 0;
             byte[] bytes = new byte[bufferSize];
             Random rand = new Random();
@@ -264,7 +301,11 @@ public class HDDRandomAccess implements IBenchmark {
             long start = System.nanoTime();
             String bytesToWrite = "";
 
-            while (System.nanoTime() - start  < millis/1000000) {
+			if(fileSize <= bufferSize){
+				bufferSize = fileSize/4;
+			}
+
+			while ((System.nanoTime() - start)  < millis * 1000000000) {
                 position = random.nextInt(fileSize - bufferSize);
 
                 rand.nextBytes(bytes);
