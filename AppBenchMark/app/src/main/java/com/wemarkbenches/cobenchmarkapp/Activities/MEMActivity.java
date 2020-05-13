@@ -3,6 +3,7 @@ package com.wemarkbenches.cobenchmarkapp.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -32,8 +33,6 @@ public class MEMActivity extends AppCompatActivity {
 
         result = (CardView) findViewById(R.id.result);
         result.setVisibility(View.INVISIBLE);
-
-
 
 
         button = (Button) findViewById(R.id.btnback);
@@ -76,7 +75,7 @@ public class MEMActivity extends AppCompatActivity {
                     @Override
                     protected String doInBackground(String... params) {
                         try {
-                            Benchmark.run();
+                            Benchmark.run(getApplicationContext());
                             Thread.sleep(3000);
                         }
                         catch(InterruptedException e) {
