@@ -70,6 +70,57 @@
         app:cardCornerRadius="24dp"
         app:cardElevation="12dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Results"
+            android:textSize="40dp"
+            android:gravity="center"
+            android:textColor="@color/myBackground"
+            />
+
+        <TextView
+            android:id="@+id/result_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Results"
+            android:textSize="40dp"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:textColor="@color/myBackground"
+            />
+
+        <TextView
+            android:id="@+id/result_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Results"
+            android:textSize="20dp"
+            android:layout_marginTop="140dp"
+            android:gravity="center"
+            android:textColor="@color/myBackground"
+            />
+
+        <TextView
+            android:id="@+id/result_component"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Results"
+            android:textSize="40dp"
+            android:layout_marginTop="180dp"
+            android:gravity="center"
+            android:textColor="@color/myBackground"
+            />
     </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/btn_cancel"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_cancel"
+        android:background="@drawable/backbuttonshape"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp"
+        />
 
 </RelativeLayout>

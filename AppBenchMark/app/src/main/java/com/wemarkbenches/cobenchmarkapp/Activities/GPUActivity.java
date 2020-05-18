@@ -22,9 +22,9 @@ public class GPUActivity extends AppCompatActivity {
 
     CircularProgressButton circularProgressButton;
     private Button button;
-    private ImageView image;
+    private ImageView image, cancelBtn;
     private CardView result;
-
+    private boolean clicked = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +50,21 @@ public class GPUActivity extends AppCompatActivity {
         });
 
 
+        cancelBtn = (ImageView) findViewById(R.id.btn_cancel);
+        cancelBtn.setVisibility(View.INVISIBLE);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v.getId() == R.id.btn_cancel) {
+                    Toast.makeText(GPUActivity.this, "Benchmark cancelled", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(GPUActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    clicked = true;
+                    finish();
+                }
+            }
+        });
+
         image = (ImageView) findViewById(R.id.btnshare);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,9 +87,12 @@ public class GPUActivity extends AppCompatActivity {
         circularProgressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cancelBtn.setVisibility(View.VISIBLE);
                 AsyncTask<String, String, String> demo = new AsyncTask<String, String, String>() {
                     @Override
                     protected String doInBackground(String... params) {
+
+
                         try {
                             /* Aici bagi benchmarkul!! */
                             Thread.sleep(3000);
@@ -88,6 +106,8 @@ public class GPUActivity extends AppCompatActivity {
                     @Override
                     protected void onPostExecute(String s) {
                         if(s.equals("Done!")) {
+                            cancelBtn.setVisibility(View.INVISIBLE);
+
                             result.setVisibility(View.VISIBLE);
                             Toast.makeText(GPUActivity.this, "Benchmark done", Toast.LENGTH_SHORT).show();
                             circularProgressButton.doneLoadingAnimation(Color.parseColor("#B82E1F"), BitmapFactory.decodeResource(getResources(),R.drawable.ic_done_white_48dp));

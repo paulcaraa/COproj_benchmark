@@ -13,6 +13,7 @@
         <activity android:name=".Activities.MEMActivity" />
         <activity android:name=".Activities.GPUActivity" />
         <activity android:name=".Activities.CPUActivity" />
+        <activity android:name=".Activities.NETActivity" />
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

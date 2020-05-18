@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.GPUActivity"
+    tools:context=".Activities.NETActivity"
     android:background="@drawable/backgroundactivities">
 
 
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="1"
-            android:text="GPU benchmark"
+            android:text="Network benchmark"
             android:textSize="18dp"
             android:textColor="@android:color/white"/>
 
@@ -113,6 +113,7 @@
             android:gravity="center"
             android:textColor="@color/myBackground"
             />
+
     </androidx.cardview.widget.CardView>
 
     <ImageView
