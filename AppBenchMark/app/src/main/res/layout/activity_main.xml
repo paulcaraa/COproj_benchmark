@@ -45,8 +45,8 @@
     </RelativeLayout>
 
     <GridLayout
-        android:columnCount="2"
-        android:rowCount="5"
+        android:columnCount="1"
+        android:rowCount="10"
         android:alignmentMode="alignMargins"
         android:columnOrderPreserved="false"
         android:layout_width="match_parent"
@@ -147,7 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Storage Benchmark"
+                    android:text="HDD Benchmark"
                     android:textColor="#6f0000"
                     android:textSize="18dp" />
             </LinearLayout>
@@ -186,7 +186,71 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardElevation="6dp"
+            app:cardCornerRadius="12dp"
+            android:layout_margin="12dp"
+            >
 
+            <LinearLayout
+                android:id="@+id/button5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_network" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="NET Benchmark"
+                    android:textColor="#6f0000"
+                    android:textSize="18dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardElevation="6dp"
+            app:cardCornerRadius="12dp"
+            android:layout_margin="12dp"
+            >
+
+            <LinearLayout
+                android:id="@+id/buttonExit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_exit" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Exit App"
+                    android:textColor="#6f0000"
+                    android:textSize="18dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
 
     </GridLayout>
