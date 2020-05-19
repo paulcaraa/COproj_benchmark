@@ -15,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.wemarkbenches.cobenchmarkapp.R;
+import com.wemarkbenches.cobenchmarkapp.benchmark.RAMbenchmark.Benchmark;
 import com.wemarkbenches.cobenchmarkapp.main.MainActivity;
+import com.wemarkbenches.cobenchmarkapp.timing.Timer;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
@@ -25,6 +27,10 @@ public class RAMActivity extends AppCompatActivity {
     private Button button;
     private ImageView image, cancelBtn;
     private CardView result;
+
+    Timer time = new Timer();
+    private double time_result = 0;
+    Benchmark rambenchmark = new Benchmark();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +98,9 @@ public class RAMActivity extends AppCompatActivity {
                     protected String doInBackground(String... params) {
                         try {
                             /* Aici bagi benchmarkul!! */
+                            time.start();
+                            rambenchmark.run(getApplicationContext());
+                            time_result = time.stop();
                             Thread.sleep(3000);
                         }
                         catch(InterruptedException e) {
