@@ -12,8 +12,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jaredrummler.android.device.DeviceName;
 import com.wemarkbenches.cobenchmarkapp.R;
 import com.wemarkbenches.cobenchmarkapp.benchmark.RAMbenchmark.Benchmark;
 import com.wemarkbenches.cobenchmarkapp.main.MainActivity;
@@ -76,7 +78,7 @@ public class RAMActivity extends AppCompatActivity {
                 if(v.getId() == R.id.btnshare) {
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "My score for RAM benchmark: " + rambenchmark.getResult());
                     sendIntent.setType("text/plain");
 
                     Intent shareIntent = Intent.createChooser(sendIntent, null);
@@ -113,6 +115,25 @@ public class RAMActivity extends AppCompatActivity {
                     protected void onPostExecute(String s) {
                         if(s.equals("Done!")) {
                             cancelBtn.setVisibility(View.INVISIBLE);
+
+                            String deviceName = DeviceName.getDeviceName();
+
+
+                            StringBuilder sb = new StringBuilder ();
+                            sb.append ((int) (time_result/Math.pow(10,9)));
+                            sb.append(" ");
+                            sb.append ("seconds");
+                            String newStr = sb.toString ();
+
+
+                            TextView MyScore = (TextView)findViewById(R.id.result_score);
+                            MyScore.setText(rambenchmark.getResult());
+                            TextView MyTime = (TextView)findViewById(R.id.result_time);
+                            MyTime.setText(newStr);
+                            TextView MyPhone = (TextView)findViewById(R.id.result_component);
+                            MyPhone.setText(deviceName);
+
+
                             result.setVisibility(View.VISIBLE);
                             Toast.makeText(RAMActivity.this, "Benchmark done", Toast.LENGTH_SHORT).show();
                             circularProgressButton.doneLoadingAnimation(Color.parseColor("#B82E1F"), BitmapFactory.decodeResource(getResources(),R.drawable.ic_done_white_48dp));

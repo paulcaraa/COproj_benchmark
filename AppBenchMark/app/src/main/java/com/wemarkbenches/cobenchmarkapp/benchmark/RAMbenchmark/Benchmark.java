@@ -5,10 +5,12 @@ import com.wemarkbenches.cobenchmarkapp.benchmark.IBenchmark;
 
 public class Benchmark {
 
-    long fileSize = 1L * 1024 * 1024 * 1024;
+  //  long fileSize = 1L * 1024 * 1024 * 1024;
+    long fileSize = 512 * 1024 * 1024;
+
     int bufferSize = 4 * 1024;
 
-    private double finalScore;
+    private double finalScore = 0.0;
 
     public void run(Context context)
     {
@@ -18,5 +20,12 @@ public class Benchmark {
         finalScore = Double.valueOf(result);
         Log.i("Final score: ", finalScore + "");
         rambenchmark.clean();
+    }
+
+    public String getResult() {
+        if(finalScore == 0.0) {
+            return String.valueOf(0.0);
+        }
+        return String.valueOf(finalScore);
     }
 }
