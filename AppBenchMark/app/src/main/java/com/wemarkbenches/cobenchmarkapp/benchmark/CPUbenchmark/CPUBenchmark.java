@@ -41,7 +41,7 @@ public class CPUBenchmark {
         cryptoScore = finalScore - floatScore - intScore;
         bm.clean("crypto");
 
-        String score = "Score: " + 300 * 100/finalScore;
+        String score = "Score: " + 1600 * 37000/finalScore;
         System.out.println(score);
         return score;
     }
