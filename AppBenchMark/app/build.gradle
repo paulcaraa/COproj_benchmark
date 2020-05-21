@@ -34,7 +34,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    compile 'com.jaredrummler:android-device-names:2.0.0'
+    implementation 'com.jaredrummler:android-device-names:2.0.0'
     //
-    compile 'br.com.simplepass:loading-button-android:1.7.2'
+    implementation 'br.com.simplepass:loading-button-android:1.7.2'
+    debugImplementation "com.github.brianPlummer:tinydancer:0.1.2"
+    releaseImplementation "com.github.brianPlummer:tinydancer-noop:0.1.2"
+    testImplementation "com.github.brianPlummer:tinydancer-noop:0.1.2"
 }
