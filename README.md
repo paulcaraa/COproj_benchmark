@@ -40,9 +40,9 @@ At first, the fascination with finding out how and how efficiently our devices w
 
 <div>
 <img src="https://i.ibb.co/Wx3Mmfk/1.jpg" width="200">
-img src="https://i.ibb.co/VTjtHgB/2.jpg" width="200">
-img src="https://i.ibb.co/X2XrDFR/3.jpg" width="200">
-img src="https://i.ibb.co/qBr12SR/4.jpg" width="200">
+<img src="https://i.ibb.co/VTjtHgB/2.jpg" width="200">
+<img src="https://i.ibb.co/X2XrDFR/3.jpg" width="200">
+<img src="https://i.ibb.co/qBr12SR/4.jpg" width="200">
 </div>
 
 ## How to use the app
