@@ -1,8 +1,11 @@
 package com.wemarkbenches.cobenchmarkapp.Activities;
 
+import com.wemarkbenches.cobenchmarkapp.benchmark.GPUbenchmark.GPUBenchmark;
+import com.wemarkbenches.cobenchmarkapp.benchmark.GPUbenchmark.MyGLRenderer;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wemarkbenches.cobenchmarkapp.R;
@@ -24,9 +28,10 @@ public class GPUActivity extends AppCompatActivity {
     private Button button;
     private ImageView image, cancelBtn;
     private CardView result;
+    static private Context context;
     private boolean clicked = false;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_g_p_u);
 
@@ -91,15 +96,12 @@ public class GPUActivity extends AppCompatActivity {
                 AsyncTask<String, String, String> demo = new AsyncTask<String, String, String>() {
                     @Override
                     protected String doInBackground(String... params) {
-
-
-                        try {
-                            /* Aici bagi benchmarkul!! */
-                            Thread.sleep(3000);
-                        }
-                        catch(InterruptedException e) {
-                            e.printStackTrace();
-                        }
+//                        if(MyGLRenderer.lastNrFrames != 0){
+//                                return "Done!";
+//                        }else {
+                            Intent intent = new Intent(GPUActivity.this, GPUBenchmark.class);
+                            startActivity(intent);
+//                        }
                         return "Done!";
                     }
 
@@ -107,6 +109,8 @@ public class GPUActivity extends AppCompatActivity {
                     protected void onPostExecute(String s) {
                         if(s.equals("Done!")) {
                             cancelBtn.setVisibility(View.INVISIBLE);
+                            TextView MyScore = (TextView)findViewById(R.id.result_score);
+                            MyScore.setText("Nr. frames"+String.valueOf(MyGLRenderer.lastNrFrames));
 
                             result.setVisibility(View.VISIBLE);
                             Toast.makeText(GPUActivity.this, "Benchmark done", Toast.LENGTH_SHORT).show();
