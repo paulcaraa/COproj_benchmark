@@ -52,7 +52,7 @@ At first, the fascination with finding out how and how efficiently our devices w
 The User Interface is really straight-forward. When you launch the application, you can choose the Benchmark for the component that you wish to test. Once on the Benchmark page, you press the "Start Benchmark" button and wait for the tests to finish. When everything is done, the Benchmark score will be displayed on the screen.
 
 ## How to download the app (the APK)
-For mobile (Android only), just download the apk from [This link](https://drive.google.com/open?id=1gkVYLR0PuRVNXfi_HrR_AdptV6kLhEX8).
+For mobile (Android only), just download the apk from [This link](https://drive.google.com/open?id=1bLJ4OnllOX8FhoZ-Sn564Ko3988aZu00).
 Otherwise, you can use the emulator provided by Android Studio. Just clone or download the files from this repository, import the project in Android Studio, where you can buid and run the app.
 
 ## Authors
