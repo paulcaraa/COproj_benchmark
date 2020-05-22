@@ -55,6 +55,7 @@ The User Interface is really straight-forward. When you launch the application, 
 For mobile (Android only), just download the apk from [This link](https://drive.google.com/open?id=1bLJ4OnllOX8FhoZ-Sn564Ko3988aZu00).
 Otherwise, you can use the emulator provided by Android Studio. Just clone or download the files from this repository, import the project in Android Studio, where you can buid and run the app.
 
+USE THIS LINK IF THE GOOGLE DRIVE LINK DOESN'T WORK: [THIS LINK](https://ufile.io/znyajjfr)
 ## Authors
 * **Achim-Balica Vasile Adrian - Team Leader** - NET Benchmark - [GitHub Profile](https://github.com/AdrianABV99)
 * **Bașnic Ioan** - XML/JavaFX Design/Bugfixer - [GitHub Profile](https://github.com/IoanBasnic)
